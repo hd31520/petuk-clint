@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import './Navbar.css';
+import { AuthContext } from '../context/AuthContext/AuthContext';
 
 const Navbar = () => {
     const [theme, setTheme] = useState('light');
+    const { user, signOutUser } = use(AuthContext);
 
     useEffect(() => {
         const saved = localStorage.getItem('theme') || 'light';
@@ -18,12 +20,28 @@ const Navbar = () => {
         document.documentElement.setAttribute('data-theme', newTheme);
     };
 
+
+    const logOutUser = () => {
+        signOutUser()
+            .then(() => {
+                console.log('User signed out successfully');
+            })
+            .catch(error => {
+                console.error('Logout failed:', error);
+            });
+    };
+
+
     const navLinks = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/allfood">All Foods</NavLink></li>
             <li><NavLink to="/gallery">Gallery</NavLink></li>
-            <li><NavLink to="/login">Login</NavLink></li>
+
+            {
+                user ? "" : <li><NavLink to="/login">Login</NavLink></li>
+            }
+
         </>
     );
 
@@ -56,12 +74,13 @@ const Navbar = () => {
                 <button onClick={toggleTheme} className="btn btn-outline">
                     {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
                 </button>
-                <div className="dropdown dropdown-end">
+                {
+                    user ? <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
                             <img
                                 alt="User Profile"
-                                src="https://placehold.co/100x100/a3e635/000000?text=A"
+                                src={user?.photoURL}
                                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100?text=U'; }}
                             />
                         </div>
@@ -74,9 +93,10 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a >Logout</a></li>
+                        <li><a onClick={logOutUser} >Logout</a></li>
                     </ul>
-                </div>
+                </div> : ""
+                }
             </div>
         </div>
     );

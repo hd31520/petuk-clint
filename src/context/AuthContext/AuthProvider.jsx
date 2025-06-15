@@ -29,6 +29,9 @@ const AuthProvider = ({children}) => {
         setLoading(true);
         return signOut(auth)
     }
+    const signInWithGitHub = () => {
+        
+    }
 
     useEffect( () =>{
         const unSubscribe = onAuthStateChanged(auth, currentUser =>{
@@ -47,7 +50,8 @@ const AuthProvider = ({children}) => {
         createUser,
         signInUser,
         signInWithGoogle,
-        signOutUser
+        signOutUser,
+        signInWithGitHub
     }
 
     return (
