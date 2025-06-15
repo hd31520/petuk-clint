@@ -1,0 +1,98 @@
+[
+  {
+    "_id": "654bda89e342a425f8072e9f",
+    "foodName": "Spicy Ramen",
+    "foodImage": "https://i.imgur.com/OfkFw2C.jpg",
+    "foodCategory": "Asian",
+    "price": 12.99,
+    "purchaseCount": 150
+  },
+  {
+    "_id": "654bda89e342a425f8072ea0",
+    "foodName": "Margherita Pizza",
+    "foodImage": "https://i.imgur.com/TV2d4vA.jpg",
+    "foodCategory": "Italian",
+    "price": 14.50,
+    "purchaseCount": 220
+  },
+  {
+    "_id": "654bda89e342a425f8072ea1",
+    "foodName": "Classic Beef Burger",
+    "foodImage": "https://i.imgur.com/9r4Y2bA.jpg",
+    "foodCategory": "American",
+    "price": 11.00,
+    "purchaseCount": 310
+  },
+  {
+    "_id": "654bda89e342a425f8072ea2",
+    "foodName": "Chicken Tacos",
+    "foodImage": "https://i.imgur.com/L12sE4A.jpg",
+    "foodCategory": "Mexican",
+    "price": 9.75,
+    "purchaseCount": 185
+  },
+  {
+    "_id": "654bda89e342a425f8072ea3",
+    "foodName": "Sushi Platter",
+    "foodImage": "https://i.imgur.com/qE4z3qg.jpg",
+    "foodCategory": "Japanese",
+    "price": 22.00,
+    "purchaseCount": 165
+  },
+  {
+    "_id": "654bda89e342a425f8072ea4",
+    "foodName": "Pasta Carbonara",
+    "foodImage": "https://i.imgur.com/zV8m9dE.jpg",
+    "foodCategory": "Italian",
+    "price": 15.25,
+    "purchaseCount": 250
+  },
+  {
+    "_id": "654bda89e342a425f8072ea5",
+    "foodName": "Vegan Buddha Bowl",
+    "foodImage": "https://i.imgur.com/nJgqL8J.jpg",
+    "foodCategory": "Vegan",
+    "price": 13.50,
+    "purchaseCount": 95
+  },
+  {
+    "_id": "654bda89e342a425f8072ea6",
+    "foodName": "Chocolate Lava Cake",
+    "foodImage": "https://i.imgur.com/dK5k3aM.jpg",
+    "foodCategory": "Dessert",
+    "price": 7.50,
+    "purchaseCount": 400
+  },
+  {
+    "_id": "654bda89e342a425f8072ea7",
+    "foodName": "Greek Salad",
+    "foodImage": "https://i.imgur.com/1aXilwP.jpg",
+    "foodCategory": "Salad",
+    "price": 8.99,
+    "purchaseCount": 120
+  },
+  {
+    "_id": "654bda89e342a425f8072ea8",
+    "foodName": "Butter Chicken",
+    "foodImage": "https://i.imgur.com/oGflT2Q.jpg",
+    "foodCategory": "Indian",
+    "price": 16.00,
+    "purchaseCount": 280
+  },
+  {
+    "_id": "654bda89e342a425f8072ea9",
+    "foodName": "Fish and Chips",
+    "foodImage": "https://i.imgur.com/oB0a5eL.jpg",
+    "foodCategory": "British",
+    "price": 13.75,
+    "purchaseCount": 140
+  },
+  {
+    "_id": "654bda89e342a425f8072eaa",
+    "foodName": "Pho Soup",
+    "foodImage": "https://i.imgur.com/uFpYllp.jpg",
+    "foodCategory": "Vietnamese",
+    "price": 11.50,
+    "purchaseCount": 110
+  }
+]
