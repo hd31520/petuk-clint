@@ -4,31 +4,27 @@ import toast from 'react-hot-toast';
 
 import bannerImage from '../../assets/banner.png';
 import FoodCard from '../../shared/FoodCard';
+import axiosInstance from '../../hooks/axiosInstance';
 
 
 const Home = () => {
     const [topFoods, setTopFoods] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetch('/foods.json') 
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return res.json();
-            })
-            .then(data => {
-                const sortedFoods = data.sort((a, b) => b.purchaseCount - a.purchaseCount);
-                setTopFoods(sortedFoods.slice(0, 6));
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error("Failed to fetch top foods:", error);
-                setLoading(false);
-                toast.error("Could not load top foods.");
-            });
-    }, []);
+     useEffect(() => {
+    axiosInstance.get('/top-food')
+      .then(res => {
+        const data = res.data;
+        const sortedFoods = data.sort((a, b) => b.purchaseCount - a.purchaseCount);
+        setTopFoods(sortedFoods.slice(0, 6));
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Failed to fetch top foods:", error);
+        setLoading(false);
+        toast.error("Could not load top foods.");
+      });
+  }, []);
 
     const handleSubscription = (e) => {
         e.preventDefault();

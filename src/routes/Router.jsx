@@ -5,6 +5,7 @@ import login from "../pages/Login/login";
 import AllFoods from "../pages/AllFoods/AllFoods";
 import Gallery from "../pages/Gallery/Gallery";
 import Register from "../pages/Register/Register";
+import SinglePage from "../pages/SinglePage/SinglePage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'Gallery',
         Component: Gallery
+      },
+      {
+        path: 'foods/:id',
+        element:<SinglePage></SinglePage>
       }
     ]
   },
