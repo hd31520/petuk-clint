@@ -1,39 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar, FaPlus, FaMinus } from 'react-icons/fa';
-import { useLoaderData } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+// import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import toast, { Toaster } from 'react-hot-toast';
+import axiosInstance from '../../hooks/axiosInstance';
 
 const SinglePage = () => {
-    const products = useLoaderData();
-    const product = products.data
-    const [mainImage, setMainImage] = useState(product?.foodImage?.[0] || '');
+    const params = useParams();
+    const { user } = useAuth();
+    // const axiossecure = useAxiosSecure();
+const navigate = useNavigate()
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [mainImage, setMainImage] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [purchaseCount, setPurchaseCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(product?.price || 0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
-        if (product?.foodImage?.[0]) {
-            setMainImage(product.foodImage[0]);
-        }
-        if(product?.price){
-            setTotalPrice(product.price * quantity);
-        }
-    }, [product,quantity]);
-    console.log(product)
+        setLoading(true);
+        axiosInstance.get(`/foods/${params.id}`)
+            .then(res => {
+                setProduct(res.data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch product", err);
+                setLoading(false);
+            });
+    }, [params.id]);
 
     useEffect(() => {
-        if (product?.price) {
+        if (product) {
+            setMainImage(product.foodImage?.[0] || '');
             setTotalPrice(product.price * quantity);
         }
-    }, [quantity, product]);
+    }, [product, quantity]);
 
     const handleQuantityChange = (amount) => {
         setQuantity(prev => Math.max(1, prev + amount));
     };
 
     const handleAddToCart = () => {
-        console.log(`Added ${quantity} of ${product?.name} to cart.`);
-        setPurchaseCount(prev => prev + quantity);
+        if (!user) {
+            toast.error("Please login to add items to the cart.");
+            return navigate('/login');
+        }
+        const sendData = {
+            userEmail: user.email,
+            quantity,
+            productId: product._id
+        };
+        axiosInstance.post('/cart/add', sendData)
+            .then(res => {
+                toast.success(res.data.message || 'Successfully added!');
+            })
+            .catch(err => {
+                toast.error(err.response?.data?.message || "An error occurred.");
+            });
     };
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-bars loading-lg"></span></div>;
+    }
+
+    if (!product) {
+        return <div className="text-center py-10">Product not found.</div>;
+    }
 
     return (
         <div data-theme="light" className="font-sans text-base-content">
@@ -83,20 +116,11 @@ const SinglePage = () => {
 
                         <div className="card-actions items-center gap-4 mb-6">
                             <div className="join border border-base-300">
-                                <button onClick={() => handleQuantityChange(-1)} className="btn btn-ghost join-item">
-                                    <FaMinus />
-                                </button>
+                                <button onClick={() => handleQuantityChange(-1)} className="btn btn-ghost join-item"><FaMinus /></button>
                                 <span className="px-6 py-3 font-semibold text-lg join-item">{quantity}</span>
-                                <button onClick={() => handleQuantityChange(1)} className="btn btn-ghost join-item">
-                                    <FaPlus />
-                                </button>
+                                <button onClick={() => handleQuantityChange(1)} className="btn btn-ghost join-item"><FaPlus /></button>
                             </div>
-                            <button
-                                onClick={handleAddToCart}
-                                className="btn btn-primary"
-                            >
-                                ADD TO CART
-                            </button>
+                            <button onClick={handleAddToCart} className="btn btn-primary">ADD TO CART</button>
                         </div>
 
                         <div className="mt-4">
@@ -105,13 +129,7 @@ const SinglePage = () => {
                             </p>
                         </div>
 
-                        <div className="text-base-content/80 my-6">
-                            <p>
-                                <span className="font-bold">Purchase Count:</span> {purchaseCount}
-                            </p>
-                        </div>
-
-                        <div className="divider"></div>
+                        <div className="divider my-6"></div>
 
                         <div>
                             <p className="mb-2"><span className="font-semibold text-base-content/90">SKU:</span> {product?.sku}</p>
@@ -124,17 +142,16 @@ const SinglePage = () => {
                 <div className="mt-16 border-t border-base-300 pt-8">
                     <div role="tablist" className="tabs tabs-lifted">
                         <a role="tab" className="tab tab-active">Description</a>
-                       
                     </div>
                     <div className="p-4 bg-base-200 rounded-b-box rounded-tr-box">
-                        <p className="text-base-content/80 leading-relaxed">
-                            {
-                                product?.description
-                            }
-                        </p>
+                        <p className="text-base-content/80 leading-relaxed">{product?.description}</p>
                     </div>
                 </div>
             </main>
+             <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     );
 };

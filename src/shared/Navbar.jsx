@@ -41,7 +41,11 @@ const Navbar = () => {
             <li><NavLink to="/gallery">Gallery</NavLink></li>
 
             {
-                user ? "" : <li><NavLink to="/login">Login</NavLink></li>
+                user ?
+                    <>
+                        <li><NavLink to="/cart">Cart</NavLink></li>
+                    </>
+                    : <li><NavLink to="/login">Login</NavLink></li>
             }
 
         </>
@@ -63,7 +67,7 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-               <Link className='h-16 w-16'><img src={icon} alt="" /></Link>
+                <Link className='h-16 w-16'><img src={icon} alt="" /></Link>
             </div>
 
             <div className="navbar-center hidden lg:flex">
@@ -78,26 +82,26 @@ const Navbar = () => {
                 </button>
                 {
                     user ? <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img
-                                alt="User Profile"
-                                src={user?.photoURL}
-                                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100?text=U'; }}
-                            />
+                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
+                                <img
+                                    alt="User Profile"
+                                    src={user?.photoURL}
+                                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100?text=U'; }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a onClick={logOutUser} >Logout</a></li>
-                    </ul>
-                </div> : ""
+                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                            <li>
+                                <a className="justify-between">
+                                    Profile
+                                    <span className="badge">New</span>
+                                </a>
+                            </li>
+                            <li><a>Settings</a></li>
+                            <li><a onClick={logOutUser} >Logout</a></li>
+                        </ul>
+                    </div> : ""
                 }
             </div>
         </div>

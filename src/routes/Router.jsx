@@ -6,12 +6,19 @@ import AllFoods from "../pages/AllFoods/AllFoods";
 import Gallery from "../pages/Gallery/Gallery";
 import Register from "../pages/Register/Register";
 import SinglePage from "../pages/SinglePage/SinglePage";
-import axiosInstance from "../hooks/axiosInstance";
+// import axiosInstance from "../hooks/axiosInstance";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
+import Cart from "../pages/Cart/Cart";
+// import Cart from "../pages/Cart/Cart";
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
+    // errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
@@ -36,8 +43,12 @@ const router = createBrowserRouter([
       {
         path: 'foods/:id',
         element:<SinglePage></SinglePage>,
-        loader: ({ params }) => axiosInstance.get(`/foods/${params.id}`)
+        
 
+      },
+      {
+        path: 'cart',
+        element:<PrivateRoute><Cart></Cart></PrivateRoute>
       }
     ]
   },

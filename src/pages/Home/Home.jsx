@@ -6,6 +6,7 @@ import Banner from './Banner';
 import TopFood from './TopFood';
 import Choose from './Choose';
 import Subscribe from './Subscribe';
+import Testimonials from './Testimonials';
 
 
 const Home = () => {
@@ -46,12 +47,13 @@ const Home = () => {
             <TopFood loading={loading} topFoods={topFoods} ></TopFood>
 
             <Choose></Choose>
-
+            <Testimonials></Testimonials>
             <Subscribe handleSubscription={handleSubscription}></Subscribe>
             <Toaster
                 position="top-center"
                 reverseOrder={false}
             />
+
         </div>
     );
 };
