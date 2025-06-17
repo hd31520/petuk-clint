@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
 
 
 const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
@@ -30,7 +31,8 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
     const signInWithGitHub = () => {
-        
+        setLoading(true);
+        return signInWithPopup(githubProvider)
     }
     const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {

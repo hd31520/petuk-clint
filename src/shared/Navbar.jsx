@@ -1,7 +1,9 @@
 import React, { use, useEffect, useState } from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import './Navbar.css';
+import icon from '../assets/petuk.png'
 import { AuthContext } from '../context/AuthContext/AuthContext';
+
 
 const Navbar = () => {
     const [theme, setTheme] = useState('light');
@@ -61,7 +63,7 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case text-xl">Foodie</a>
+               <Link className='h-16 w-16'><img src={icon} alt="" /></Link>
             </div>
 
             <div className="navbar-center hidden lg:flex">
