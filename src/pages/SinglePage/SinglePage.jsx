@@ -5,17 +5,23 @@ import { useNavigate, useParams } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from '../../hooks/axiosInstance';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useCart from '../../hooks/useCart';
 
 const SinglePage = () => {
     const params = useParams();
     const { user } = useAuth();
+    const [refetch] = useCart();
+
     // const axiossecure = useAxiosSecure();
 const navigate = useNavigate()
+const axiosSecure = useAxiosSecure();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [mainImage, setMainImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
+    
 
     useEffect(() => {
         setLoading(true);
@@ -28,7 +34,7 @@ const navigate = useNavigate()
                 console.error("Failed to fetch product", err);
                 setLoading(false);
             });
-    }, [params.id]);
+    }, [params.id,axiosSecure]);
 
     useEffect(() => {
         if (product) {
@@ -51,8 +57,9 @@ const navigate = useNavigate()
             quantity,
             productId: product._id
         };
-        axiosInstance.post('/cart/add', sendData)
+        axiosSecure.post('/cart/add', sendData)
             .then(res => {
+                refetch()
                 toast.success(res.data.message || 'Successfully added!');
             })
             .catch(err => {

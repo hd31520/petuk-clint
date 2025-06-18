@@ -3,12 +3,14 @@ import { Link, NavLink } from 'react-router';
 import './Navbar.css';
 import icon from '../assets/petuk.png'
 import { AuthContext } from '../context/AuthContext/AuthContext';
+import useCart from '../hooks/useCart';
 
 
 const Navbar = () => {
+    const [cart ] = useCart()
     const [theme, setTheme] = useState('light');
     const { user, signOutUser } = use(AuthContext);
-
+ const data = cart?.items || [];
     useEffect(() => {
         const saved = localStorage.getItem('theme') || 'light';
         setTheme(saved);
@@ -43,7 +45,7 @@ const Navbar = () => {
             {
                 user ?
                     <>
-                        <li><NavLink to="/cart">Cart</NavLink></li>
+                        <li><NavLink to="/cart">Cart <sup className='font-bold'>{data?.length}</sup> </NavLink></li>
                     </>
                     : <li><NavLink to="/login">Login</NavLink></li>
             }
