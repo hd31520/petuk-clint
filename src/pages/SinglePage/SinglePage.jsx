@@ -4,28 +4,29 @@ import { useNavigate, useParams } from 'react-router';
 // import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import toast, { Toaster } from 'react-hot-toast';
-import axiosInstance from '../../hooks/axiosInstance';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useCart from '../../hooks/useCart';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SinglePage = () => {
+    const axiosPublic = useAxiosPublic()
     const params = useParams();
     const { user } = useAuth();
-    const [refetch] = useCart();
+   const [cart, refetch, isLoading] = useCart();
 
     // const axiossecure = useAxiosSecure();
-const navigate = useNavigate()
-const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [mainImage, setMainImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
-    
+    console.log(cart)
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance.get(`/foods/${params.id}`)
+        axiosPublic.get(`/foods/${params.id}`)
             .then(res => {
                 setProduct(res.data);
                 setLoading(false);
@@ -34,7 +35,7 @@ const axiosSecure = useAxiosSecure();
                 console.error("Failed to fetch product", err);
                 setLoading(false);
             });
-    }, [params.id,axiosSecure]);
+    }, [params.id,axiosPublic]);
 
     useEffect(() => {
         if (product) {
@@ -59,10 +60,14 @@ const axiosSecure = useAxiosSecure();
         };
         axiosSecure.post('/cart/add', sendData)
             .then(res => {
-                refetch()
                 toast.success(res.data.message || 'Successfully added!');
+                refetch()
+                navigate('/cart')
+
+
             })
             .catch(err => {
+                refetch()
                 toast.error(err.response?.data?.message || "An error occurred.");
             });
     };
@@ -94,7 +99,7 @@ const axiosSecure = useAxiosSecure();
                     <div>
                         <div className="card bg-base-200 shadow-sm mb-4">
                             <figure className="p-4">
-                                <img src={mainImage} alt={product?.name} className="w-full max-w-md h-auto object-cover rounded-box" />
+                                <img src={mainImage} alt={product?.foodName} className="w-full max-w-md h-auto object-cover rounded-box" />
                             </figure>
                         </div>
                         <div className="flex gap-4">
@@ -111,7 +116,7 @@ const axiosSecure = useAxiosSecure();
                     </div>
 
                     <div className="card-body p-0">
-                        <h2 className="card-title text-4xl font-bold mb-2">{product?.name}</h2>
+                        <h2 className="card-title text-4xl font-bold mb-2">{product?.foodName}</h2>
                         <p className="text-3xl font-light text-primary mb-4">${product?.price?.toFixed(2)}</p>
                         <div className="flex items-center mb-4">
                             <div className="flex text-yellow-400">
@@ -155,7 +160,7 @@ const axiosSecure = useAxiosSecure();
                     </div>
                 </div>
             </main>
-             <Toaster
+            <Toaster
                 position="top-center"
                 reverseOrder={false}
             />

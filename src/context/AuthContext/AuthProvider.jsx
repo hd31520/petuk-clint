@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
-import axiosInstance from '../../hooks/axiosInstance';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({children}) => {
+    const axiosPublic = useAxiosPublic();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
 
@@ -49,7 +50,7 @@ const AuthProvider = ({children}) => {
           if(currentUser){
             //   get token and store client
             const userInfo = {email: currentUser.email}
-            axiosInstance.post('/jwt', userInfo)
+            axiosPublic.post('/jwt', userInfo)
             .then(res => {
                 if(res.data.token){
                     localStorage.setItem('access-token', res.data.token)

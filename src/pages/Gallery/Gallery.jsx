@@ -10,7 +10,7 @@ import "yet-another-react-lightbox/plugins/captions.css";
 
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
-import axiosInstance from '../../hooks/axiosInstance';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 // 2. PASTE YOUR COLLECTED IMAGE DATA ARRAY HERE
 // This is the data you provided earlier. Replace it with your full list.
@@ -18,26 +18,26 @@ import axiosInstance from '../../hooks/axiosInstance';
 
 
 export default function GalleryPage() {
+    const axiosPublic = useAxiosPublic();
     const [allFoodData, setAllFoodData] = useState([])
     const [loading, setLoading] = useState(true)
     const [index, setIndex] = useState(-1);
 
     useEffect(() => {
-        axiosInstance.get('/top-food')
+        axiosPublic.get('/top-food')
             .then(res => {
                 setLoading(false);
                 console.log(res)
                 setAllFoodData(res.data)
             })
-    }, [])
-    // 3. Transform your data into the format the libraries need.
-    // `useMemo` prevents this expensive operation from running on every render.
+    }, [axiosPublic])
+  
     const photos = useMemo(() => allFoodData.map(food => ({
         key: food._id,
-        src: food.foodImage[0], // Use the first image from the array
-        width: 800,  // IMPORTANT: Assign a default width
-        height: 600, // IMPORTANT: Assign a default height
-        title: food.foodName // Use foodName for the lightbox caption
+        src: food.foodImage[0], 
+        width: 800, 
+        height: 600, 
+        title: food.foodName
     })), [allFoodData]);
 
     if(loading){

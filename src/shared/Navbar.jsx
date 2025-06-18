@@ -95,10 +95,10 @@ const Navbar = () => {
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <a className="justify-between">
+                                <NavLink to='/food/add' className="justify-between">
                                     Profile
                                     <span className="badge">New</span>
-                                </a>
+                                </NavLink>
                             </li>
                             <li><a>Settings</a></li>
                             <li><a onClick={logOutUser} >Logout</a></li>

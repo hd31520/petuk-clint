@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+
 import { toast } from 'react-hot-toast';
-import axiosInstance from '../../hooks/axiosInstance';
 import FoodCarder from '../../shared/FoodCarder';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const AllFoods = () => {
+    const axiosPublic = useAxiosPublic();
     const [foods, setFoods] = useState([]);
     const [filteredFoods, setFilteredFoods] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +13,7 @@ const AllFoods = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance.get('/top-food')
+        axiosPublic.get('/top-food')
             .then(res => {
                 setFoods(res.data);
             })
@@ -23,7 +24,7 @@ const AllFoods = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [axiosPublic]);
 
     useEffect(() => {
         const results = foods.filter(food =>

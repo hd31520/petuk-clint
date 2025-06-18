@@ -1,3 +1,4 @@
+import React from 'react';
 import { createBrowserRouter, } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Home from "../pages/Home/Home";
@@ -6,10 +7,10 @@ import AllFoods from "../pages/AllFoods/AllFoods";
 import Gallery from "../pages/Gallery/Gallery";
 import Register from "../pages/Register/Register";
 import SinglePage from "../pages/SinglePage/SinglePage";
-// import axiosInstance from "../hooks/axiosInstance";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import Cart from "../pages/Cart/Cart";
+import AddFood from '../pages/AddFood/AddFood';
 // import Cart from "../pages/Cart/Cart";
 
 
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
-    // errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element:<PrivateRoute><Cart></Cart></PrivateRoute>
+      },
+      {
+        path: 'food/add',
+        element: <PrivateRoute><AddFood></AddFood></PrivateRoute>
       }
     ]
   },

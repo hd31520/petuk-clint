@@ -100,12 +100,12 @@ const {user} = useAuth();
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-3xl font-bold text-gray-800">My Cart</h2>
+                <h2 className="text-xl md:text-3xl font-bold text-gray-800">My Cart</h2>
                 <div className="flex items-center gap-6">
-                    <p className="text-2xl font-semibold text-gray-700">
+                    <p className="text-xl md:text-2xl font-semibold text-gray-700">
                         Total: ${totalAmount.toFixed(2)}
                     </p>
-                    <button onClick={handleCheckout} disabled={data.length === 0} className="btn btn-primary text-lg px-6 py-3">
+                    <button onClick={handleCheckout} disabled={data.length === 0} className="btn btn-primary text-xl md:text-lg px-2 md:px-6 py-3">
                         Proceed to Checkout
                     </button>
                 </div>

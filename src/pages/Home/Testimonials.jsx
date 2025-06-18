@@ -1,3 +1,6 @@
+import React from 'react';
+
+
 const Testimonials = () => {
     const testimonials = [
         { name: "Sarah L.", quote: "Absolutely the best Italian food I've had outside of Italy. The pasta was divine!", avatar: "https://i.pravatar.cc/150?img=1" },
@@ -20,6 +23,8 @@ const Testimonials = () => {
                             <p className="italic my-4">"{t.quote}"</p>
                             <h3 className="card-title">{t.name}</h3>
                         </div>
+
+                        
                     </div>
                 ))}
             </div>

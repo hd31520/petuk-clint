@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import bannerImage from '../../assets/banner.png';
-import axiosInstance from '../../hooks/axiosInstance';
 import Banner from './Banner';
 import TopFood from './TopFood';
 import Choose from './Choose';
 import Subscribe from './Subscribe';
 import Testimonials from './Testimonials';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 
 const Home = () => {
+    const axiosPublic = useAxiosPublic()
     const [topFoods, setTopFoods] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axiosInstance.get('/top-food')
+        axiosPublic.get('/top-food')
             .then(res => {
                 const data = res.data;
                 console.log(data)
@@ -27,7 +28,7 @@ const Home = () => {
                 setLoading(false);
                 toast.error("Could not load top foods.");
             });
-    }, []);
+    }, [axiosPublic]);
 
     const handleSubscription = (e) => {
         e.preventDefault();
