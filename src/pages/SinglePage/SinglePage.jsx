@@ -13,6 +13,7 @@ const SinglePage = () => {
     const params = useParams();
     const { user } = useAuth();
    const [cart, refetch, isLoading] = useCart();
+   console.log(isLoading)
 
     // const axiossecure = useAxiosSecure();
     const navigate = useNavigate()

@@ -54,6 +54,7 @@ const {user} = useAuth();
             }
         });
     };
+    console.log(data)
 
     if (isLoading) {
         return (

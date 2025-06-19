@@ -46,6 +46,7 @@ const Navbar = () => {
                 user ?
                     <>
                         <li><NavLink to="/cart">Cart <sup className='font-bold'>{data?.length}</sup> </NavLink></li>
+                         <li><NavLink to='/food/add' className="justify-between">AddFood</NavLink></li>
                     </>
                     : <li><NavLink to="/login">Login</NavLink></li>
             }
@@ -94,12 +95,7 @@ const Navbar = () => {
                             </div>
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>
-                                <NavLink to='/food/add' className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </NavLink>
-                            </li>
+                           
                             <li><a>Settings</a></li>
                             <li><a onClick={logOutUser} >Logout</a></li>
                         </ul>

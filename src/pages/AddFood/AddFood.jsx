@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -16,17 +16,15 @@ const AddFood = () => {
         const foodImage1 = form.foodImage1.value;
         const foodImage2 = form.foodImage2.value;
         const foodCategory = form.foodCategory.value;
-        const quantity = parseInt(form.quantity.value);
+        const totalQuantity = parseInt(form.totalQuantity.value);
         const price = parseFloat(form.price.value);
-        const origin = form.origin.value;
         const description = form.description.value;
 
         const foodImage = [];
         if (foodImage1) foodImage.push(foodImage1);
         if (foodImage2) foodImage.push(foodImage2);
 
-
-        if (!foodName || foodImage.length === 0 || !foodCategory || isNaN(quantity) || isNaN(price) || !origin || !description) {
+        if (!foodName || foodImage.length === 0 || !foodCategory || isNaN(totalQuantity) || isNaN(price) || !description) {
             toast.error("Please fill in all required fields, including at least one image URL.");
             return;
         }
@@ -40,11 +38,10 @@ const AddFood = () => {
             foodName,
             foodImage,
             foodCategory,
-            quantity,
+            totalQuantity,
             price,
-            origin,
             description,
-            purchaseCount: 0, // <--- ADD THIS LINE: Initialize purchaseCount to 0
+            purchaseCount: 0,
             addedBy: {
                 name: user.displayName,
                 email: user.email,
@@ -52,7 +49,7 @@ const AddFood = () => {
         };
 
         try {
-            const res = await axiosSecure.post('/food/add', newFood);
+            const res = await axiosSecure.post('/add/topfood', newFood);
             if (res.data.insertedId) {
                 toast.success('Food item added successfully!');
                 form.reset();
@@ -61,7 +58,6 @@ const AddFood = () => {
                 toast.error('Failed to add food item. No ID returned.');
             }
         } catch (err) {
-            console.error("Error adding food item:", err);
             toast.error(err.response?.data?.message || err.message || 'An unexpected error occurred.');
         }
     };
@@ -85,20 +81,34 @@ const AddFood = () => {
                             <input type="text" name="foodImage2" placeholder="https://example.com/image2.jpg" className="input input-bordered w-full" />
                         </div>
                         <div className="form-control">
-                            <label className="label"><span className="label-text text-gray-700 font-medium">Food Category</span></label>
-                            <input type="text" name="foodCategory" placeholder="e.g., Italian" className="input input-bordered w-full" required />
+                            <label className="label">
+                                <span className="label-text text-gray-700 font-medium">Food Category</span>
+                            </label>
+                            <select name="foodCategory" className="select select-bordered w-full" required>
+                                <option value="">Select Category</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Indian">Indian</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="American">American</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="Korean">Korean</option>
+                                <option value="French">French</option>
+                            </select>
                         </div>
+
+
                         <div className="form-control">
-                            <label className="label"><span className="label-text text-gray-700 font-medium">Quantity</span></label>
-                            <input type="number" name="quantity" placeholder="e.g., 20" className="input input-bordered w-full" required min="1" />
+                            <label className="label"><span className="label-text text-gray-700 font-medium">Total Quantity</span></label>
+                            <input type="number" name="totalQuantity" placeholder="e.g., 20" className="input input-bordered w-full" required min="1" />
                         </div>
                         <div className="form-control">
                             <label className="label"><span className="label-text text-gray-700 font-medium">Price</span></label>
                             <input type="number" name="price" placeholder="e.g., 15.99" className="input input-bordered w-full" required min="0" step="0.01" />
-                        </div>
-                        <div className="form-control">
-                            <label className="label"><span className="label-text text-gray-700 font-medium">Food Origin</span></label>
-                            <input type="text" name="origin" placeholder="e.g., Italy" className="input input-bordered w-full" required />
                         </div>
                     </div>
                     <div className="form-control">
@@ -110,6 +120,10 @@ const AddFood = () => {
                     </div>
                 </form>
             </div>
+             <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     );
 };
