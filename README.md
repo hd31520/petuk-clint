@@ -4,13 +4,22 @@
 
 ---
 
-## 🚀 Features
-🌐 Live Demo
-🔗 https://petuk-22f6f.web.app/
-📫 Contact
+## 🌐 Live Demo
+
+🔗 [https://petuk-22f6f.web.app/](https://petuk-22f6f.web.app/)
+
+---
+
+## 📫 Contact
+
 For feedback, questions, or support:
 
-✉️ Email: mdhridoy3240@gmail.com
+✉️ Email: [mdhridoy3240@gmail.com](mailto:mdhridoy3240@gmail.com)
+
+---
+
+## 🚀 Features
+
 ### Homepage
 - **Responsive Navigation Bar**:
   - Left: Logo
@@ -102,6 +111,26 @@ For feedback, questions, or support:
 
 ---
 
+## 🔗 App Routes
+
+| Route Path         | Description                            | Access       |
+|--------------------|----------------------------------------|--------------|
+| `/`                | Home Page                              | Public       |
+| `/login`           | Login Page                             | Public       |
+| `/register`        | Registration Page                      | Public       |
+| `/allfood`         | All Food Listing                       | Public       |
+| `/gallery`         | Food Gallery Page                      | Public       |
+| `/foods/:id`       | Single Food Details Page               | Public       |
+| `/cart`            | Cart Page                              | 🔒 Protected |
+| `/food/add`        | Add Food Page                          | 🔒 Protected |
+| `/myorder`         | My Orders Page                         | 🔒 Protected |
+| `/myfoods`         | My Foods Page                          | 🔒 Protected |
+| `*`                | 404 Not Found Page                     | Public       |
+
+> 🔒 Protected routes require login using Google (Firebase Auth).
+
+---
+
 ## 🧑‍💻 Technology Stack
 
 | Technology             | Purpose                      |
@@ -119,4 +148,29 @@ For feedback, questions, or support:
 ## 📂 Installation & Setup
 
 1. **Clone the Repository:**
-   
+   ```bash
+   git clone https://github.com/yourusername/petuk.git
+   cd petuk
+   ```
+
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Add Firebase Configuration:**
+   Create a `.env` file and include:
+   ```
+   VITE_API_KEY=your_firebase_api_key
+   VITE_AUTH_DOMAIN=your_auth_domain
+   ...
+   ```
+
+4. **Run the App:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🎉 Thank You for Exploring Petuk!
