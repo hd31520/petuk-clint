@@ -11,6 +11,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import Cart from "../pages/Cart/Cart";
 import AddFood from '../pages/AddFood/AddFood';
+import MyOrder from '../pages/MyOrder/MyOrder';
 // import Cart from "../pages/Cart/Cart";
 
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: 'food/add',
         element: <PrivateRoute><AddFood></AddFood></PrivateRoute>
+      },
+      {
+        path: 'myorder',
+        element: <PrivateRoute><MyOrder></MyOrder></PrivateRoute>
       }
     ]
   },
