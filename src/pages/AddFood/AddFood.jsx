@@ -1,12 +1,12 @@
 import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddFood = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleAddFood = async (e) => {
         e.preventDefault();
@@ -53,7 +53,7 @@ const AddFood = () => {
             if (res.data.insertedId) {
                 toast.success('Food item added successfully!');
                 form.reset();
-                navigate('/my-foods');
+                // navigate('/my-foods');
             } else {
                 toast.error('Failed to add food item. No ID returned.');
             }

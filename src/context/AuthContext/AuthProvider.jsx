@@ -34,7 +34,7 @@ const AuthProvider = ({children}) => {
     }
     const signInWithGitHub = () => {
         setLoading(true);
-        return signInWithPopup(githubProvider)
+        return signInWithPopup(auth,githubProvider)
     }
     const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
@@ -67,7 +67,7 @@ const AuthProvider = ({children}) => {
         return () =>{
             unSubscribe();
         }
-    }, [])
+    }, [axiosPublic])
 
     const authInfo = {
         updateUserProfile,

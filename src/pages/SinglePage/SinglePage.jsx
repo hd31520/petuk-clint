@@ -63,7 +63,7 @@ const SinglePage = () => {
             .then(res => {
                 toast.success(res.data.message || 'Successfully added!');
                 refetch()
-                navigate('/cart')
+               
 
 
             })
