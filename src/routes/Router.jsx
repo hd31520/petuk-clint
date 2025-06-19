@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import Cart from "../pages/Cart/Cart";
 import AddFood from '../pages/AddFood/AddFood';
 import MyOrder from '../pages/MyOrder/MyOrder';
+import MyFoods from '../pages/MyFoods/MyFoods';
 // import Cart from "../pages/Cart/Cart";
 
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: 'myorder',
         element: <PrivateRoute><MyOrder></MyOrder></PrivateRoute>
+      },
+      {
+        path: 'myfoods',
+        element: <PrivateRoute><MyFoods></MyFoods></PrivateRoute>
       }
     ]
   },

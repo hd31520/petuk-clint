@@ -3,8 +3,10 @@ import { FaTrashAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router';
 
 const Cart = () => {
+    const navigate = useNavigate();
     const [cart, refetch, isLoading] = useCart();
     const axiosSecure = useAxiosSecure();
 const {user} = useAuth();
@@ -81,6 +83,7 @@ const {user} = useAuth();
 
         if (res.status === 200) {
             refetch();
+            navigate('/myorder')
             Swal.fire({
                 icon: 'success',
                 title: 'Success',

@@ -46,7 +46,7 @@ const Navbar = () => {
                 user ?
                     <>
                         <li><NavLink to="/cart">Cart <sup className='font-bold'>{data?.length}</sup> </NavLink></li>
-                         <li><NavLink to='/food/add' className="justify-between">AddFood</NavLink></li>
+                         
                     </>
                     : <li><NavLink to="/login">Login</NavLink></li>
             }
@@ -94,10 +94,12 @@ const Navbar = () => {
                                 />
                             </div>
                         </div>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <ul tabIndex={0} className="menu menu-sm flex flex-col gap-2 dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                            
-                            <Link to='/myorder'>My Order</Link>
-                            <li><a onClick={logOutUser} >Logout</a></li>
+                            <li><Link to='/myorder'>My Order</Link></li>
+                            <li><Link to='/myfoods'>My Foods</Link></li>
+                            <li><NavLink to='/food/add' className="justify-between">AddFood</NavLink></li>
+                            <li className='flex justify-center items-center'><a onClick={logOutUser} >Logout</a></li>
                         </ul>
                     </div> : ""
                 }
