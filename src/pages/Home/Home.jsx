@@ -20,7 +20,7 @@ const Home = () => {
                 const data = res.data;
                 console.log(data)
                 const sortedFoods = data.sort((a, b) => b.purchaseCount - a.purchaseCount);
-                setTopFoods(sortedFoods.slice(0, 6));
+                setTopFoods(sortedFoods.slice(0, 8));
                 setLoading(false);
             })
             .catch(error => {

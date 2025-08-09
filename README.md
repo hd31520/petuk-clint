@@ -174,3 +174,9 @@ For feedback, questions, or support:
 ---
 
 ## 🎉 Thank You for Exploring Petuk!
+
+
+Live Site Link : https://petuk-22f6f.web.app
+GitHub Repository ( server ) : https://github.com/Programming-Hero-Web-Course4/b11a11-server-side-hd31520.git
+GitHub Repository ( client  ) : https://github.com/Programming-Hero-Web-Course4/b11a11-client-side-hd31520.git
+
