@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar, FaPlus, FaMinus } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router'; // Changed import from 'react-router' to 'react-router-dom'
+import { useNavigate, useParams } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -11,7 +11,7 @@ const SinglePage = () => {
     const axiosPublic = useAxiosPublic();
     const params = useParams();
     const { user } = useAuth();
-    const [cart, refetch] = useCart(); // Refactored to not include isLoading, as it's not used
+    const [cart, refetch] = useCart();
     
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
@@ -21,9 +21,7 @@ const SinglePage = () => {
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    // Removed the incorrect use of the `use` hook
-    // Removed redundant `useAxiosSecure` import
-
+    // Fetch product data from the server
     useEffect(() => {
         setLoading(true);
         axiosPublic.get(`/foods/${params.id}`)
@@ -37,6 +35,7 @@ const SinglePage = () => {
             });
     }, [params.id, axiosPublic]);
 
+    // Update main image and total price when product or quantity changes
     useEffect(() => {
         if (product) {
             setMainImage(product.foodImage?.[0] || '');
@@ -44,10 +43,12 @@ const SinglePage = () => {
         }
     }, [product, quantity]);
 
+    // Function to handle quantity changes
     const handleQuantityChange = (amount) => {
         setQuantity(prev => Math.max(1, prev + amount));
     };
 
+    // Function to add the item to the cart
     const handleAddToCart = () => {
         if (!user) {
             toast.error("Please login to add items to the cart.");
@@ -78,8 +79,8 @@ const SinglePage = () => {
     }
 
     return (
-        // Removed `data-theme="light"` to allow the Navbar to control the theme
-        <div className="font-sans text-base-content bg-base-100">
+        // Removed the hardcoded data-theme attribute to allow for dark mode
+        <div className="font-sans text-base-content">
             <header className="bg-base-200 py-8 border-b border-base-300">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="text-sm breadcrumbs">
