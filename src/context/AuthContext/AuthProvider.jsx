@@ -73,7 +73,7 @@ const AuthProvider = ({children}) => {
                         // Use a dedicated axios instance to fetch user role
                         const token = localStorage.getItem('access-token');
                         const secureAxios = axios.create({
-                            baseURL: 'http://localhost:5000',
+                            baseURL: 'https://petuk-server-five.vercel.app',
                             headers: {
                                 authorization: `Bearer ${token}`
                             }
