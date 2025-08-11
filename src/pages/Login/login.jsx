@@ -77,6 +77,9 @@ const Login = () => {
             <div className="hero-content flex-col lg:flex-row-reverse w-full max-w-4xl">
                 <div className="text-center lg:text-left lg:w-1/2">
                     <h1 className="text-5xl font-bold">Login now!</h1>
+                    <h3>admin login</h3>
+                    <h3>hridoy@dev.com</h3>
+                    <h3>31520666@Hh$</h3>
                     <Lottie animationData={lotielogin} loop={true} />
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl lg:w-1/2">
