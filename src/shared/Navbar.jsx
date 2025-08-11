@@ -55,7 +55,9 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        // Add "fixed top-0 w-full" to make the navbar sticky at the top.
+        // Tailwind CSS provides these utility classes.
+        <div className="navbar bg-base-100 shadow-sm fixed top-0 w-full z-50"> 
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
