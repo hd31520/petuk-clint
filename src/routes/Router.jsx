@@ -13,9 +13,10 @@ import Cart from "../pages/Cart/Cart";
 import AddFood from '../pages/AddFood/AddFood';
 import MyOrder from '../pages/MyOrder/MyOrder';
 import MyFoods from '../pages/MyFoods/MyFoods';
-// import Cart from "../pages/Cart/Cart";
-
-
+import DashboardLayout from '../pages/Dashboard/DashboardLayout';
+import UserDashboard from '../pages/Dashboard/UserDashboard';
+import UserManagement from '../pages/Dashboard/UserManagement';
+import WorkerPage from '../pages/Dashboard/WorkerPage';
 
 const router = createBrowserRouter([
   {
@@ -46,8 +47,6 @@ const router = createBrowserRouter([
       {
         path: 'foods/:id',
         element:<SinglePage></SinglePage>,
-        
-
       },
       {
         path: 'cart',
@@ -67,6 +66,24 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    children: [
+        {
+            index: true,
+            element: <UserDashboard />
+        },
+        {
+            path: 'user-management',
+            element: <UserManagement />
+        },
+        {
+            path: 'worker-page',
+            element: <WorkerPage />
+        }
+    ]
+  }
 ]);
 
 export default router;

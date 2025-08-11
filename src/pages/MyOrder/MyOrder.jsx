@@ -24,35 +24,36 @@ const MyOrder = () => {
   }, [user, axiosSecure]);
 
   if (loading) {
-    return <div className="text-center py-20"><span className="loading loading-spinner loading-lg text-primary"></span></div>;
+    return <div className="text-center py-20 flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg text-primary"></span></div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">My Orders History</h2>
+    // Use DaisyUI's theme-agnostic classes for background and text
+    <div className="bg-base-100 text-base-content min-h-screen container mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold text-center mb-8">My Orders History</h2>
 
       {orders.length === 0 ? (
-        <p className="text-center text-lg text-gray-600">You have no orders yet.</p>
+        <p className="text-center text-lg">You have no orders yet.</p>
       ) : (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <div className="overflow-x-auto bg-base-100 shadow-lg rounded-lg">
           <table className="table w-full">
-            <thead className="bg-gray-100">
+            <thead className="bg-base-200">
               <tr>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">#</th>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">Name</th>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">Quantity</th>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">Image</th>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">Amount</th>
-                <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 uppercase">Status</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">#</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">Name</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">Quantity</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">Image</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">Amount</th>
+                <th className="py-3 px-4 text-left text-sm font-semibold uppercase">Status</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order, i) => (
                 order.items.map((item, j) => (
-                  <tr key={`${order._id}-${j}`} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-4 px-4 text-sm text-gray-900">{i + 1}</td>
-                    <td className="py-4 px-4 font-bold text-gray-900">{item.foodName}</td>
-                    <td className="py-4 px-4 text-gray-700">{item.quantity}</td>
+                  <tr key={`${order._id}-${j}`} className="border-b border-base-200 hover:bg-base-200">
+                    <td className="py-4 px-4 text-sm">{i + 1}</td>
+                    <td className="py-4 px-4 font-bold">{item.foodName}</td>
+                    <td className="py-4 px-4">{item.quantity}</td>
                     <td className="py-4 px-4">
                       <img
                         className="h-16 w-16 object-cover rounded-md"
@@ -60,10 +61,10 @@ const MyOrder = () => {
                         alt={item.foodName}
                       />
                     </td>
-                    <td className="py-4 px-4 text-gray-700 font-semibold">
+                    <td className="py-4 px-4 font-semibold text-success">
                       ${(item.quantity * item.price).toFixed(2)}
                     </td>
-                    <td className="py-4 px-4 text-green-600 font-semibold">
+                    <td className="py-4 px-4 text-success font-semibold">
                       {order.status}
                     </td>
                   </tr>

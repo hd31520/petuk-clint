@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider,
 import { auth } from '../../firebase/firebase.init';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 
-
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
@@ -46,28 +45,36 @@ const AuthProvider = ({children}) => {
     useEffect( () =>{
         const unSubscribe = onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser);
-            setLoading(false);
-          if(currentUser){
-            //   get token and store client
-            const userInfo = {email: currentUser.email}
-            axiosPublic.post('/jwt', userInfo)
-            .then(res => {
-                if(res.data.token){
-                    localStorage.setItem('access-token', res.data.token)
-                    setLoading(false);
-                }
+            
+            if(currentUser){
+                // Save the user to the database if they don't exist
+                const userInfo = {
+                    email: currentUser.email,
+                    name: currentUser.displayName,
+                };
+                axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    console.log('User saved to database:', res.data);
+                });
 
-            })
+                // Get token and store client
+                axiosPublic.post('/jwt', userInfo)
+                .then(res => {
+                    if(res.data.token){
+                        localStorage.setItem('access-token', res.data.token);
+                        setLoading(false);
+                    }
+                });
             }
             else{
-                localStorage.removeItem('access-token')
+                localStorage.removeItem('access-token');
                 setLoading(false);
             }
-        })
+        });
         return () =>{
             unSubscribe();
-        }
-    }, [axiosPublic])
+        };
+    }, [axiosPublic]);
 
     const authInfo = {
         updateUserProfile,

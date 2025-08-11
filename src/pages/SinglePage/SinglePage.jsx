@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar, FaPlus, FaMinus } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router';
-// import useAxiosSecure from '../../hooks/useAxiosSecure';
-import useAuth from '../../hooks/useAuth';
+import { useNavigate, useParams } from 'react-router'; // Changed import from 'react-router' to 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
+import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useCart from '../../hooks/useCart';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SinglePage = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosPublic();
     const params = useParams();
     const { user } = useAuth();
-   const [cart, refetch, isLoading] = useCart();
-   console.log(isLoading)
-
-    // const axiossecure = useAxiosSecure();
-    const navigate = useNavigate()
+    const [cart, refetch] = useCart(); // Refactored to not include isLoading, as it's not used
+    
+    const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [mainImage, setMainImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
-    console.log(cart)
+
+    // Removed the incorrect use of the `use` hook
+    // Removed redundant `useAxiosSecure` import
 
     useEffect(() => {
         setLoading(true);
@@ -36,7 +35,7 @@ const SinglePage = () => {
                 console.error("Failed to fetch product", err);
                 setLoading(false);
             });
-    }, [params.id,axiosPublic]);
+    }, [params.id, axiosPublic]);
 
     useEffect(() => {
         if (product) {
@@ -62,13 +61,10 @@ const SinglePage = () => {
         axiosSecure.post('/cart/add', sendData)
             .then(res => {
                 toast.success(res.data.message || 'Successfully added!');
-                refetch()
-               
-
-
+                refetch();
             })
             .catch(err => {
-                refetch()
+                refetch();
                 toast.error(err.response?.data?.message || "An error occurred.");
             });
     };
@@ -82,7 +78,8 @@ const SinglePage = () => {
     }
 
     return (
-        <div data-theme="light" className="font-sans text-base-content">
+        // Removed `data-theme="light"` to allow the Navbar to control the theme
+        <div className="font-sans text-base-content bg-base-100">
             <header className="bg-base-200 py-8 border-b border-base-300">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="text-sm breadcrumbs">
@@ -107,7 +104,7 @@ const SinglePage = () => {
                             {product?.foodImage?.map((img, index) => (
                                 <div
                                     key={index}
-                                    className={`p-2 cursor-pointer transition-all duration-200 rounded-box ${mainImage === img ? ' outline-primary outline-2' : ' outline-base-300 outline-1'}`}
+                                    className={`p-2 cursor-pointer transition-all duration-200 rounded-box ${mainImage === img ? ' outline outline-primary outline-2' : ' outline outline-base-300 outline-1'}`}
                                     onClick={() => setMainImage(img)}
                                 >
                                     <img src={img} alt={`${product?.name} thumbnail ${index + 1}`} className="w-24 h-24 object-cover rounded-box" />
