@@ -1,8 +1,12 @@
+// src/providers/AuthProvider.jsx
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAxiosSecure from '../../hooks/useAxiosSecure'; // This hook is now called correctly.
+import { useNavigate } from 'react-router'; // useNavigate is called here, within the router context.
+import axios from 'axios'; // Add this import
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
@@ -11,6 +15,9 @@ const AuthProvider = ({children}) => {
     const axiosPublic = useAxiosPublic();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [userRole, setUserRole] = useState(null);
+    const [isUserRoleLoading, setIsUserRoleLoading] = useState(true);
+    // useAxiosSecure is no longer called here to prevent circular dependency
 
     const createUser = (email, password) =>{
         setLoading(true);
@@ -36,11 +43,11 @@ const AuthProvider = ({children}) => {
         return signInWithPopup(auth,githubProvider)
     }
     const updateUserProfile = (name, photo) => {
-    return updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: photo,
-    });
-};
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo,
+        });
+    };
 
     useEffect( () =>{
         const unSubscribe = onAuthStateChanged(auth, currentUser =>{
@@ -62,12 +69,34 @@ const AuthProvider = ({children}) => {
                 .then(res => {
                     if(res.data.token){
                         localStorage.setItem('access-token', res.data.token);
-                        setLoading(false);
+                        
+                        // Use a dedicated axios instance to fetch user role
+                        const token = localStorage.getItem('access-token');
+                        const secureAxios = axios.create({
+                            baseURL: 'http://localhost:5000',
+                            headers: {
+                                authorization: `Bearer ${token}`
+                            }
+                        });
+                        
+                        secureAxios.get('/users/role')
+                        .then(roleRes => {
+                            setUserRole(roleRes.data.role);
+                            setIsUserRoleLoading(false);
+                            setLoading(false);
+                        })
+                        .catch(error => {
+                            console.error('Failed to fetch user role:', error);
+                            setIsUserRoleLoading(false);
+                            setLoading(false);
+                        });
                     }
                 });
             }
             else{
                 localStorage.removeItem('access-token');
+                setUserRole(null);
+                setIsUserRoleLoading(false);
                 setLoading(false);
             }
         });
@@ -80,6 +109,8 @@ const AuthProvider = ({children}) => {
         updateUserProfile,
         loading,
         user,
+        userRole,
+        isUserRoleLoading,
         createUser,
         signInUser,
         signInWithGoogle,
@@ -88,9 +119,9 @@ const AuthProvider = ({children}) => {
     }
 
     return (
-        <AuthContext value={authInfo}>
+        <AuthContext.Provider value={authInfo}>
             {children}
-        </AuthContext>
+        </AuthContext.Provider>
     );
 };
 
